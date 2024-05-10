@@ -1,0 +1,9 @@
+Paso 2.
+
+4) Lo que hace la función para obtener credenciales de usuario es devolver una clave única 
+asociada con esas credenciales. En este caso "return {"code":200,"get":get,"data":key}" va
+a regresar una llave diferente cada vez
+
+5) generar más de una clave por usuario puede ser beneficioso en términos de seguridad y trazabilidad, 
+pero también la desventaja es que aumenta la complejidad en la gestión de las sesiones o una posible 
+confusión al momento de intentar acceder.
