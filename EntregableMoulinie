@@ -1,0 +1,8 @@
+Analiza qué ventajas tiene que se genere más de una llave por usuario y qué desventajas podría tener (revisa la carpoeta auth)
+
+Las ventajas de generar más de una llave pueden ser que hay más procesos de autenticación entre el servidor de la API o de la base de datos y el la computadora o dispositivo del usuario
+que esté intentando accesar, lo que reforzaría la seguridad del sistema de una mejor manera.
+
+Las desventajas que podría tener es que al haber tantos sistemas de validación es posible que uno falle y en general toda la cadena muestre un error inclusive aunque sea el usuario correcto.
+
+Además el tiempo de procesamiento de distintas llaves entre servidores y computadoras aumentaría notablemente, lo que supondría un problema de eficiencia y velocidad.
