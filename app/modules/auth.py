@@ -58,10 +58,6 @@ def proveedorRoutes(id):
 @auth.post("/v1/auth")
 def login():
     r = request.json
-    authKeys=["email","passwd"]
-    for key in authKeys:
-            if not key in r:
-                return '{"msg":"missing' +f'{key}"'+'}',401
     #hacer authenticación
     ctrl= CtrlUser()
     auth = ctrl.getCredentials(r["email"],r['passwd'])

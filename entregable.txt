@@ -1,0 +1,19 @@
+Prueba en postman loguearte varias veces y explica por qué el resultado en los casos no es el mismo
+
+    Cada vez que nos logueamos el resultado no es lo mismo debido a que se crean nuevas llaves gracias al método Snowflake.
+
+Ventajas de que se generen más de una llave por usuario. 
+
+    - Mayor seguridad: Es más seguro al tener diferentes valores de llaves en cada sesión,
+        con ello se reduce el riesgo de que un atacante comprometa todas las sesiones del usuario.
+    - Mayor flexibilidad: Con múltiples llaves de acceso se permite una adaptación a diferentes
+        escenarios y necesidades. 
+    - Mejor control en el acceso.
+
+Desventajas que podría tener (revisa la carpoeta auth)
+    
+    - Exceso de creación de credenciales: Cada que un usuario pierda una llave, el sistema tendrá que 
+        generar una nueva.
+    - Consumo adicional de recursos: Almacenar y gestionar múltiples llaves por usuario puede consumir 
+        más recursos de memoria en el servidor, afectando el rendimiento del sistema.
+        
