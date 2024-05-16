@@ -58,8 +58,7 @@ class CtrlUser(CtrlMain):
         self.user = user(get["msg"][0][1], get["msg"][0][2],get["msg"][0][3],str(get["msg"][0][4]),str(get["msg"][0][5]),get["msg"][0][6])
         self.user.setId(get["msg"][0][0])
         #validar archivo en path
-        if (os.path.isfile(path+"/"+self.user.id+".json")):
-            return {"code":200,"data":self.user.id}
+   
 
         #validar passwd
         #open file
@@ -80,11 +79,8 @@ class CtrlUser(CtrlMain):
         self.user.passwd=""
 
         #escribir credenciales en servidor
-        with open(path+"/"+f"{self.user.id}.json", 'w') as file:
+        key = self.snowflake()
+        with open(path+"/"+f"{key}.json", 'w') as file:
             json.dump(vars(self.user), file)
         #regresar llave
-        return {"code":200,"get":get,"data":self.user.id}
-    
-    
-    
-
+        return {"code":200,"get":get,"data":key}

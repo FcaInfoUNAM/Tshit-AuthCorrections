@@ -1,0 +1,10 @@
+Paso 4 
+Prueba en post man loguearte varias veces y explica por qué el resultado en los casos no es el mismo.
+
+R= La función encargada de obtener credenciales de usuario devuelve una clave única asociada con esas credenciales. En cada llamada, la sentencia "return {"code":200,"get":get,"data":key}" proporcionará una clave distinta, por eso no es lo mismo.
+_____________________________________________________________________
+
+PASO 5
+Analiza qué ventajas tiene que se genere más de una llave por usuario y qué desventajas podría tener (revisa la carpoeta auth)
+
+R= Crear múltiples claves por usuario puede ser beneficioso para mejorar la seguridad y la trazabilidad. Sin embargo, también conlleva la desventaja de aumentar la complejidad en la gestión de sesiones y puede causar confusión al intentar acceder.
