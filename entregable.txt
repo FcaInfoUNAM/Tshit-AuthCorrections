@@ -1,0 +1,10 @@
+¿Por qué el resultado en los casos no es el mismo?
+    Debido a que la función snowflake generar identificadores únicos cada vez que un usuario inicia sesión.
+
+Ventajas. 
+    Mejora la seguridad y dificulta que en caso de ataques se tome el control de todas las sesiones al tener diferentes 
+    valores, mayor flexibilidad para adaptarse a situaciones y requisitos de acceso y se tienen un mejor control de acceso.
+
+Desventajas.
+    Se podría llegar a tener un exceso de credenciales, por lo tanto, gestionar las múltiples llaves es más complejo, además de
+    que requerirá de más recursos de almacenamiento y procesamiento lo que podría afectar su rendimiento.
