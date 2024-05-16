@@ -1,0 +1,3 @@
+Una ventaja es la seguridad, porque tiene más valores y lo hace flexible, sin embargo,
+tenemos una gran desventaja que es la memoria, esta se puede llenar con facilidad ya que
+se crean varias llaves. 
