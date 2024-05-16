@@ -47,7 +47,7 @@ def proveedorRoutes(id):
     if request.method == 'PUT':
         r = request.json
         for key in keys:
-            if (key in r):
+            if (key in r): 
                 ctrl.user[key]= r[key]
         update = ctrl.update(id)
         if (update["update"]["code"]==500):
@@ -58,14 +58,9 @@ def proveedorRoutes(id):
 @auth.post("/v1/auth")
 def login():
     r = request.json
-    authKeys=["email","passwd"]
-    for key in authKeys:
-            if not key in r:
-                return '{"msg":"missing' +f'{key}"'+'}',401
     #hacer authenticación
     ctrl= CtrlUser()
     auth = ctrl.getCredentials(r["email"],r['passwd'])
     if (auth["code"]==200):
         return auth["data"],200
     return auth["msg"] ,auth["code"]
-
