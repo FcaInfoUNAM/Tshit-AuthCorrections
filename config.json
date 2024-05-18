@@ -1,8 +1,9 @@
 {
     "database":{
-        "host":"localhost",
-        "user":"root",
-        "password":"root"
+        "host":"40.67.136.226",
+        "user":"external_user",
+        "password":"Mg311004739?mar24",
+        "schema":"tshirt"
     },
     "snowflake":{
         "EPOCH":1420070400000,

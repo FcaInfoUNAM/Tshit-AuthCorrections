@@ -1,14 +1,19 @@
 import mysql.connector
+import os.path
+import json
 
 class mysqlConn:
     
     def __init__(self,config):
+        config = json.load( open('./config.json'))
+        database = config['database']
         self.connect =mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="tshit"
+        host=database["host"],
+        user=database["user"],
+        password=database["password"],
+        database=database["schema"]
         )
+        
     def start(self):
         self.cursor = self.connect.cursor()
     def stop(self):
