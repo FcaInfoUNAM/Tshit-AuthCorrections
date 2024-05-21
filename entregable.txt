@@ -1,0 +1,18 @@
+4. Prueba en post man loguearte varias veces y explica por qué el resultado en los casos no es el mismo
+
+Al loguearnos varias veces en Postman cada intento genera una nueva llave porque se utiliza
+la función snowflake para crear una nueva clave única en cada sesión de autenticación. Y cada
+vez que un usuario se autentica, se genera un nuevo token en lugar de reutilizar un token que ya existe. Esto 
+asegura que cada sesión sea única y ayuda a mejorar la seguridad al evitar la reutilización de tokens.
+
+5. Analiza qué ventajas tiene que se genere más de una llave por usuario y qué desventajas podría tener (revisa la carpoeta auth)
+
+Ventajas
+-Mayor seguridad al generar una nueva llave por cada sesión
+-Hay un mejor control en el acceso por las llaves, como cada llave es única permite quitarlas sin afectar a las demás sesiones
+que se encuentren activas
+-Permite que se gestionen mejor las sesiones y que se pueda loguear desde diferentes dispositivos sin problemas
+
+Desventajas
+-Con cada llave nueva que se genera hay un almacenamiento que con el tiempo puede llegar a ser contraproducente
+-Al haber tantas llaves generadas puede ser un problema identificar y eliminar llaves que ya no se usen
