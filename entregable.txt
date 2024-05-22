@@ -1,0 +1,16 @@
+4.
+Al iniciar sesión varias veces en Postman, cada intento genera una nueva clave porque se utiliza la función snowflake para crear una clave única en cada sesión de autenticación. Cada vez que un usuario se autentica, se genera un nuevo token en lugar de reutilizar uno ya existente. Esto asegura que cada sesión sea exclusiva y ayuda a mejorar la seguridad al evitar la reutilización de tokens.
+
+5. 
+Ventajas
+
+- Permite que se gestionen mejor las sesiones y que se pueda loguear desde diferentes dispositivos sin problemas
+- Hay un mejor control en el acceso por las llaves, como cada llave es única permite quitarlas sin afectar a las demás sesiones
+que se encuentren activas
+- Mayor seguridad al generar una nueva llave por cada sesión
+
+
+Desventajas
+
+- Al haber tantas llaves generadas puede ser un problema identificar y eliminar llaves que ya no se usen
+- Con cada llave nueva que se genera hay un almacenamiento que con el tiempo puede llegar a ser contraproducente
