@@ -1,15 +1,18 @@
 import psycopg2
 from psycopg2 import sql
+import json
 
 class mysqlConn:
     
-    def __init__(self, config):
-        self.connect = psycopg2.connect(
-            host="localhost",
-            user="postgres",
-            password="root",
-            database="tshit",
-            port=5432
+    def __init__(self,config):
+        config = json.load( open('./config.json'))
+        database = config['database']
+        self.connect =psycopg2.connect(
+        host=database["host"],
+        user=database["user"],
+        password=database["password"],
+        database=database["schema"],
+        port=5432
         )
         self.connect.autocommit = False
     
@@ -87,6 +90,7 @@ class mysqlConn:
             self.cursor.execute(query)
             myresult = self.cursor.fetchall()
             self.cursor.close()
+            print(myresult)
             return {"code": 200, "msg": myresult}
         except psycopg2.Error as e:
             return {"code": 309, "msg": str(e)}
@@ -102,4 +106,30 @@ class mysqlConn:
             self.cursor.close()
             return {"code": 200, "msg": myresult}
         except psycopg2.Error as e:
+            return {"code": 309, "msg": str(e)}
+
+    #SEARCH
+    def search(self, tabla: str, values: dict, search: str):
+        # Construimos los marcadores de posición (%s) para evitar inyección SQL
+        # psycopg2 se encarga de detectar si es int, str, etc.
+        sql_parts = [f"{key} = %s" for key in values]
+        
+        # Unimos las condiciones según el operador
+        connector = " AND " if search == "AND" else " OR "
+        where_clause = connector.join(sql_parts)
+        
+        # Usamos Identifier para el nombre de la tabla (opcional pero recomendado)
+        sql = f"SELECT * FROM {tabla} WHERE {where_clause}"
+        
+        try:
+            # Pasamos los valores como un segundo argumento a execute
+            self.cursor.execute(sql, list(values.values()))
+            myresult = self.cursor.fetchall()
+            
+            # Nota: cerrar el cursor aquí invalidará futuras operaciones 
+            # a menos que crees uno nuevo en cada llamada.
+            self.cursor.close() 
+            
+            return {"code": 200, "msg": myresult}
+        except (Exception, psycopg2.Error) as e:
             return {"code": 309, "msg": str(e)}

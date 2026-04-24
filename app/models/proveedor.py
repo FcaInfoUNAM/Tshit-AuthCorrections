@@ -1,6 +1,6 @@
 class proveedor:
 
-    def __init__(self,name:str,RFC:str,legalName:str,legalAddress:str,active:int):
+    def __init__(self,name:str,RFC:str,legalName:str,legalAddress:str,active:bool):
         self.name = name
         self.RFC = RFC
         self.legalName = legalName

@@ -21,7 +21,11 @@ visualiza la estructura de archivos en del repositorio
     },
 ...
 ```
-
+Run the database creation scripts
+```bash
+psql -U postgres -f app/database/schema/user.sql
+psql -U root -d tshit -f app/database/schema/main.sql
+```
 2. Importa las bibliotecas os.path, json y manda a llamar la configuración el archivo config.json en lugar de las cadenas en el código
 
 ```python
@@ -48,32 +52,73 @@ class mysqlConn:
 
 ## Generar un token nuevo en lugar de usar el id de usuario
 
-1. Borra la siguiente validación en module/auth
-``` python
-@auth.post("/v1/auth")
-def login():
-#...
-for key in authKeys:
-            if not key in r:
-                return '{"msg":"missing' +f'{key}"'+'}',401
-#...
+1. crea un usuario
+``` bash
+curl --location 'localhost:5000/v1/signUp' --header 'Content-Type: application/json' --data-raw '{
+  "name": "John Doe",
+  "user": "jdoe",
+  "email": "jdoe@example.com",
+  "status": "active",
+  "type": "admin",
+  "passwd": "SecurePassword123!",
+  "passwd2": "SecurePassword123!"
+}'
 ```
-2. borra la validación de existencia el archivo que tiene el nombre del id en la función get gredentials
-
-3. utiliza la función snowflake para generar una nueva llave como nombre de archivo y valor de retorno como data en lugar del Id del usuario en app/controllers/CtrlUser.py
-
-```python
-def getCredentials(self,email,passwd):
-#...
-#escribir credenciales en servidor
-        key = self.snowflake()
-        with open(path+"/"+f"{key}.json", 'w') as file:
-            json.dump(vars(self.user), file)
-        #regresar llave
-        return {"code":200,"get":get,"data":key}
-#...
+1. crea un usuario
+``` bash
+curl --location 'localhost:5000/v1/signUp' --header 'Content-Type: application/json' --data-raw '{
+  "name": "John Doe",
+  "user": "jdoe",
+  "email": "jdoe@example.com",
+  "status": "active",
+  "type": "admin",
+  "passwd": "SecurePassword123!",
+  "passwd2": "SecurePassword123!"
+}'
 ```
-4. Prueba en post man loguearte varias veces y explica por qué el resultado en los casos no es el mismo
+2. Logueate con ese usuario
+```bash
+curl --location 'http://127.0.0.1:5000/v1/auth' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "jdoe@example.com",
+  "passwd": "SecurePassword123!"
+}'
+```
 
-5. Analiza qué ventajas tiene que se genere más de una llave por usuario y qué desventajas podría tener (revisa la carpoeta auth)
+3. prueba el usuario con un endpoint diferente
 
+```bash
+curl --location --request GET 'http://127.0.0.1:5000/v1/proveedor?authKey=14c7fc7e05064000'
+```
+4. Revisa la carpeta auth, encontrarás que se generan archivos por casa sesión, revisa uno de ellos y valida la información del usuario
+
+
+5. Analiza qué ventajas tiene que se genere más de una llave por usuario y qué desventajas podría tener (revisa la carpeta auth)
+
+6. Revisa la base de datos
+
+```bash
+psql -U root -d tshit
+```
+```sql
+SELECT * FROM users;
+```
+
+
+7. Inserta un proveedor y revisa la base de datos
+```bash
+curl --location 'http://127.0.0.1:5000/v1/proveedor?authKey=111b7bcd2b064000' --header 'Content-Type: application/json' --data '{
+    "name":"Proveedor",
+    "RFC":"PV212121123",
+    "legalName":"Proveedor SA DE CV",
+    "legalAddress":"CALE 1 COL 1 DEL 1 MX",
+    "active":true
+}'
+```
+```bash
+psql -U root -d tshit
+```
+```sql
+SELECT * FROM proveedores;
+```

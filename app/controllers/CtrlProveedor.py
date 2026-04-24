@@ -46,6 +46,7 @@ class CtrlProveedor(CtrlMain):
             get["get"]={"code":204,"msg":"No content"}
             return get
         self.proveedores=[]
+        print(get["msg"])
         for p in get["msg"]:
             self.proveedor = proveedor(p[1],p[2],p[3],p[4],p[5])
             self.proveedor.setId(p[0])

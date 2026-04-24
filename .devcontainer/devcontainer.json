@@ -7,12 +7,17 @@
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.	
-
+	"features": {
+		"ghcr.io/itsmechlark/features/postgresql:1": {},
+		"ghcr.io/nlstn/devcontainer-features/psql:1": {},
+		"ghcr.io/devcontainers/features/git:1": {}
+	    
+	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	 "forwardPorts": [5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install --upgrade pip & pip install Flask psycopg2-binary sqlalchemy"
+	"postCreateCommand": "pip install --upgrade pip & pip install Flask psycopg2-binary sqlalchemy rsa"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

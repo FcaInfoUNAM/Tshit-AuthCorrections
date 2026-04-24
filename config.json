@@ -2,7 +2,8 @@
     "database":{
         "host":"localhost",
         "user":"root",
-        "password":"root"
+        "password":"root",
+        "schema":"tshit"
     },
     "snowflake":{
         "EPOCH":1420070400000,

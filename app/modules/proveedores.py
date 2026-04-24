@@ -9,9 +9,12 @@ proveedores = Blueprint('proveedores', __name__,template_folder='modules')
 #CREAR PROVEEDORES
 @proveedores.post("/v1/proveedor")
 def insertProveedor():
+    authKey = request.args.get("authKey")
     r = request.json
     p = proveedor(r["name"],r["RFC"],r["legalName"],r["legalAddress"],r["active"])
     ctrl= CtrlProveedor(p)
+    if not(ctrl.kerberos(authKey)):
+        return {"msg":"unauthorized"},409
     insert = ctrl.insert()
     if (insert["insertion"]["code"]==500):
         return json.dumps(insert["insertion"]),409
@@ -34,6 +37,8 @@ def getAll():
 def proveedorRoutes(id):
     # PARA TODOS LOS METODOS PRIMERO SE VA A VALIDAR SI EXITE EL REGISTRO CON EL ID
     ctrl= CtrlProveedor()
+    if not(ctrl.kerberos(authKey)):
+        return {"msg":"unauthorized"},409
     get = ctrl.get(id)
     if(get["get"]["code"]!=200):
         return json.dumps(get["get"]),get["get"]["code"]

@@ -33,7 +33,14 @@ class CtrlUser(CtrlMain):
         encryptedB64Str = encryptedB64.decode()
         #set in object
         self.user.passwd=encryptedB64Str
-        val = (self.user.id, self.user.name,self.user.user,self.user.email,self.user.status,self.user.type,self.user.passwd)
+        val = (
+            self.user.id,        # id
+            self.user.user,      # username (o self.user.name)
+            self.user.email,     # email
+            self.user.passwd,    # password
+            True,                # is_active (valor True por defecto)
+            self.user.status     # status
+        )
         insertion = self.connect.insert("users",val)
         return {"insertion":insertion,"data":vars(self.user)}
 
@@ -55,8 +62,10 @@ class CtrlUser(CtrlMain):
         if(len(get["msg"])==0):
             get["get"]={"code":204,"msg":"No content"}
         #gen user object
-        self.user = user(get["msg"][0][1], get["msg"][0][2],get["msg"][0][3],str(get["msg"][0][4]),str(get["msg"][0][5]),get["msg"][0][6])
+        print(get["msg"][0])
+        self.user = user(get["msg"][0][1], get["msg"][0][1],get["msg"][0][2],str(get["msg"][0][4]),str(get["msg"][0][5]),get["msg"][0][3])
         self.user.setId(get["msg"][0][0])
+        print(self.user)
         #validar archivo en path
         if (os.path.isfile(path+"/"+self.user.id+".json")):
             return {"code":200,"data":self.user.id}
@@ -80,11 +89,11 @@ class CtrlUser(CtrlMain):
         self.user.passwd=""
 
         #escribir credenciales en servidor
-        with open(path+"/"+f"{self.user.id}.json", 'w') as file:
+        key = self.snowflake()
+        with open(path+"/"+f"{key}.json", 'w') as file:
             json.dump(vars(self.user), file)
         #regresar llave
-        return {"code":200,"get":get,"data":self.user.id}
-    
+        return {"code":200,"get":get,"data":key}
     
     
 
